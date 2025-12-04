@@ -1,27 +1,30 @@
-import { Link, Outlet } from "@tanstack/react-router";
+import { Link, Outlet, useLocation } from "@tanstack/react-router";
+import { AppBar } from "../components/AppBar/AppBar";
+import { useApp } from "../context/AppContext";
+import { useEffect } from "react";
 
 export function MainLayout() {
+  const { setActiveApp } = useApp();
+  const location = useLocation();
+
+  useEffect(() => {
+
+    if (location.pathname.includes("dashboard")) setActiveApp("dashboard");
+    else if (location.pathname.includes("shop")) setActiveApp("shop");
+    else if (location.pathname.includes("library")) setActiveApp("library");
+    else if (location.pathname.includes("settings")) setActiveApp("settings");
+    else if (location.pathname.match(/^\/apps\/\d+$/)) {
+      setActiveApp(location.pathname.split("/")[2]);
+    }
+    else setActiveApp("dashboard");
+  }, [location.pathname, setActiveApp]);
+
   return (
-    <div className="flex flex-col  h-screen w-full">
-          <div className="font-bold mb-4">Fume App</div>
-          <Link to="/dashboard" activeProps={{ className: "font-bold" }}>
-            Dashboard
-          </Link>
-          <Link to="/shop" activeProps={{ className: "font-bold" }}>
-            Shop
-          </Link>
-          <Link to="/apps" activeProps={{ className: "font-bold" }}>
-            Apps
-          </Link>
-          <Link to="/library" activeProps={{ className: "font-bold" }}>
-            Library
-          </Link>
-          <div className="mt-auto">
-             <Link to="/settings" activeProps={{ className: "font-bold" }}>
-              Settings
-            </Link>
-          </div>
-      <main className="flex-1 p-4 overflow-auto">
+    <div className="flex h-screen overflow-y-hidden w-full p-8">
+      <aside className="w-32">
+        <AppBar/>
+      </aside>
+      <main className="flex-1 overflow-y-auto">
         <Outlet />
       </main>
     </div>
