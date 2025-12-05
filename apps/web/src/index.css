@@ -41,6 +41,13 @@
   background: transparent;
 }
 
+.icon {
+  will-change: transform;
+  rotate: 0.1deg;
+  transition: all 150ms ease-in-out;
+  transform-origin: left center;
+}
+
 @keyframes hoverPulse {
   0% {
     opacity: 0;

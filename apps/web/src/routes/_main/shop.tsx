@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { BarTriggerView } from "../../components/BarTrigger";
 
 export const Route = createFileRoute("/_main/shop")({
   component: Shop,
@@ -7,8 +8,12 @@ export const Route = createFileRoute("/_main/shop")({
 function Shop() {
   return (
     <div className="p-2">
-      <h3 className="text-xl font-bold">Shop</h3>
-      <p>Browse the shop.</p>
+      <div className="flex flex-col gap-2 h-screen">
+        <p>Browse the shop.</p>
+      </div>
+      <BarTriggerView className="h-60 border w-full">
+        scroll to hide the bar
+      </BarTriggerView>
     </div>
   );
 }
