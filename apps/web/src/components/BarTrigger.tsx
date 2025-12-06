@@ -1,6 +1,6 @@
 import { useRef, useEffect } from "react";
 import { useInView } from "motion/react";
-import { useApp } from "../context/AppContext";
+import { useApp } from "../context/useApp";
 
 interface BarTriggerViewProps {
   children?: React.ReactNode;

@@ -1,7 +1,7 @@
 import { Outlet } from "@tanstack/react-router";
 import { useState } from "react";
 import { AppBar } from "../components/AppBar/AppBar";
-import { useApp } from "../context/AppContext";
+import { useApp } from "../context/useApp";
 import { motion } from "motion/react";
 
 export function MainLayout() {

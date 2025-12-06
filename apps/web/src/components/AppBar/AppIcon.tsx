@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useApp } from "../../context/AppContext";
+import { useApp } from "../../context/useApp";
 import NoiseBox from "../NoiseBox";
 
 export interface AppIconProps {
