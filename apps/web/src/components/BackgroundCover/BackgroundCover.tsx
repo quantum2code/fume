@@ -8,50 +8,51 @@ interface BackgroundCoverProps {
 export function BackgroundCover({ backgroundImage }: BackgroundCoverProps) {
   const [outgoingImage, setOutgoingImage] = useState<string | null>(null);
   const [incomingImage, setIncomingImage] = useState<string | null>(null);
-  const previousImageRef = useRef<string | null>(null);
+  const debounceTimeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
-    // If the image hasn't changed, do nothing
-    if (backgroundImage === previousImageRef.current) {
-      return;
+    // Clear any pending debounce timeout
+    if (debounceTimeoutRef.current) {
+      clearTimeout(debounceTimeoutRef.current);
     }
 
-    const currentIncoming = incomingImage;
-    previousImageRef.current = backgroundImage;
+    // Debounce: wait 100ms before processing
+    debounceTimeoutRef.current = setTimeout(() => {
+      const currentIncoming = incomingImage;
 
-    // Preload and set the new image
-    if (backgroundImage) {
-      const img = new Image();
-      img.onload = () => {
-        // Update outgoing image in the callback (async, not in effect body)
+      // Preload and set the new image
+      if (backgroundImage) {
+        const img = new Image();
+        img.onload = () => {
+          // Update outgoing image if there was a previous one
+          if (currentIncoming) {
+            setOutgoingImage(currentIncoming);
+          }
+          // Update incoming image
+          setIncomingImage(backgroundImage);
+        };
+        img.onerror = () => {
+          // On error, keep the current image
+        };
+        img.src = backgroundImage;
+      } else {
+        // Clearing the background
         if (currentIncoming) {
           setOutgoingImage(currentIncoming);
-        }
-        // Update incoming image in callback
-        setIncomingImage(backgroundImage);
-        // Clear outgoing image after transition completes
-        setTimeout(() => {
-          setOutgoingImage(null);
-        }, 1000);
-      };
-      img.onerror = () => {
-        // On error, keep the current image
-      };
-      img.src = backgroundImage;
-    } else {
-      // Clearing the background
-      if (currentIncoming) {
-        // Defer state updates using setTimeout to avoid synchronous setState
-        setTimeout(() => {
-          setOutgoingImage(currentIncoming);
           setIncomingImage(null);
-          setTimeout(() => {
-            setOutgoingImage(null);
-          }, 1000);
-        }, 0);
+        }
       }
-    }
-  }, [backgroundImage, incomingImage]);
+      debounceTimeoutRef.current = null;
+    }, 200);
+
+    // Cleanup: cancel timeout if effect re-runs
+    return () => {
+      if (debounceTimeoutRef.current) {
+        clearTimeout(debounceTimeoutRef.current);
+        debounceTimeoutRef.current = null;
+      }
+    };
+  }, [backgroundImage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
@@ -62,6 +63,7 @@ export function BackgroundCover({ backgroundImage }: BackgroundCoverProps) {
           initial={{ opacity: 1, x: 0 }}
           animate={{ opacity: 0, x: -20 }}
           transition={{ duration: 0.8, ease: "easeInOut" }}
+          onAnimationComplete={() => setOutgoingImage(null)}
           className="absolute left-[-20px] top-0 bottom-0 w-[calc(100%+20px)] h-full"
         >
           <img
