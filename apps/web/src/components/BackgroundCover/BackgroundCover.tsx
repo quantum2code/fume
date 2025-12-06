@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "motion/react";
 
 interface BackgroundCoverProps {
@@ -8,51 +8,29 @@ interface BackgroundCoverProps {
 export function BackgroundCover({ backgroundImage }: BackgroundCoverProps) {
   const [outgoingImage, setOutgoingImage] = useState<string | null>(null);
   const [incomingImage, setIncomingImage] = useState<string | null>(null);
-  const debounceTimeoutRef = useRef<number | null>(null);
-
+  const debounceTimerRef = useRef<number | null>(null);
   useEffect(() => {
-    // Clear any pending debounce timeout
-    if (debounceTimeoutRef.current) {
-      clearTimeout(debounceTimeoutRef.current);
+    const currentImage = incomingImage;
+
+    if (debounceTimerRef.current !== null) {
+      clearTimeout(debounceTimerRef.current);
     }
-
-    // Debounce: wait 100ms before processing
-    debounceTimeoutRef.current = setTimeout(() => {
-      const currentIncoming = incomingImage;
-
-      // Preload and set the new image
+    debounceTimerRef.current = setTimeout(() => {
       if (backgroundImage) {
-        const img = new Image();
-        img.onload = () => {
-          // Update outgoing image if there was a previous one
-          if (currentIncoming) {
-            setOutgoingImage(currentIncoming);
-          }
-          // Update incoming image
-          setIncomingImage(backgroundImage);
-        };
-        img.onerror = () => {
-          // On error, keep the current image
-        };
-        img.src = backgroundImage;
+        setOutgoingImage(currentImage);
+        setIncomingImage(backgroundImage);
       } else {
-        // Clearing the background
-        if (currentIncoming) {
-          setOutgoingImage(currentIncoming);
-          setIncomingImage(null);
-        }
+        setIncomingImage(null);
+        setOutgoingImage(currentImage);
       }
-      debounceTimeoutRef.current = null;
     }, 200);
-
-    // Cleanup: cancel timeout if effect re-runs
     return () => {
-      if (debounceTimeoutRef.current) {
-        clearTimeout(debounceTimeoutRef.current);
-        debounceTimeoutRef.current = null;
+      if (debounceTimerRef.current != null) {
+        clearTimeout(debounceTimerRef.current);
+        debounceTimerRef.current = null;
       }
     };
-  }, [backgroundImage]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [backgroundImage]);
 
   return (
     <div className="fixed inset-0 w-full h-full z-0 pointer-events-none">
