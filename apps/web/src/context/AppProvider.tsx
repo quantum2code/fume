@@ -22,12 +22,31 @@ export function AppProvider({ children }: { children: ReactNode }) {
     return "dashboard";
   }, [location.pathname]);
 
+  //background image logic
+  const backgroundImage = useMemo(() => {
+    // System pages don't have background images
+    if (
+      activeApp === "dashboard" ||
+      activeApp === "shop" ||
+      activeApp === "library" ||
+      activeApp === "settings"
+    ) {
+      return null;
+    }
+    // For app pages, use library_hero.jpg for high-res backgrounds
+    if (activeApp && /^\d+$/.test(activeApp)) {
+      return `https://steamcdn-a.akamaihd.net/steam/apps/${activeApp}/library_hero.jpg`;
+    }
+    return null;
+  }, [activeApp]);
+
   return (
     <AppContext.Provider
       value={{
         barHidden,
         setBarHidden,
         activeApp,
+        backgroundImage,
       }}
     >
       {children}

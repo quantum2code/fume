@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_main/shop")({
 
 function Shop() {
   return (
-    <div className="p-2">
+    <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-2 h-screen">
         <p>Browse the shop.</p>
       </div>

@@ -3,6 +3,7 @@ import { createContext } from "react";
 export interface AppState {
   activeApp: string | null;
   barHidden: boolean;
+  backgroundImage: string | null;
 }
 
 interface AppContextType extends AppState {
