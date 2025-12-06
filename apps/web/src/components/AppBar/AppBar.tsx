@@ -7,19 +7,22 @@ const SystemAppRegistry: AppIconProps[] = [
 ];
 
 const UserAppRegistry: AppIconProps[] = [
-  { name: "Counter-Strike 2", appId: "730", path: "/apps/730" },
-  { name: "Dota 2", appId: "570", path: "/apps/570" },
-  { name: "Apex Legends", appId: "1172470", path: "/apps/1172470" },
-  { name: "PUBG: BATTLEGROUNDS", appId: "578080", path: "/apps/578080" },
-  { name: "Grand Theft Auto V", appId: "271590", path: "/apps/271590" },
-  { name: "Cyberpunk 2077", appId: "1091500", path: "/apps/1091500" },
-  { name: "Elden Ring", appId: "1245620", path: "/apps/1245620" },
-  { name: "Baldur's Gate 3", appId: "1086940", path: "/apps/1086940" },
+  {
+    name: "Spider-Man: Miles Morales",
+    appId: "1817190",
+    path: "/apps/1817190",
+  },
+  { name: "The Witcher 3: Wild Hunt", appId: "292030", path: "/apps/292030" },
+  { name: "Red Dead Redemption 2", appId: "1174180", path: "/apps/1174180" },
+  { name: "Batman: Arkham Knight", appId: "208650", path: "/apps/208650" },
+  { name: "Hades", appId: "1145360", path: "/apps/1145360" },
+  { name: "Marvel Rivals", appId: "2767030", path: "/apps/2767030" },
+  { name: "Stardew Valley", appId: "413150", path: "/apps/413150" },
 ];
 const AppRegistry = [...SystemAppRegistry, ...UserAppRegistry];
 export function AppBar() {
   return (
-    <div className="flex flex-col gap-2 pt-8 max-h-full overflow-y-scroll hide-scrollbar">
+    <div className="flex flex-col gap-2 max-h-full overflow-y-scroll hide-scrollbar">
       {AppRegistry.map((app) => {
         return (
           <AppIcon

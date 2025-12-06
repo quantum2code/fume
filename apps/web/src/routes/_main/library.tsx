@@ -7,7 +7,7 @@ export const Route = createFileRoute("/_main/library")({
 
 function Library() {
   return (
-    <div className="p-2">
+    <div className="flex flex-col gap-2">
       <div className="flex flex-col gap-2 h-screen">
         <p>Welcome to your library.</p>
       </div>

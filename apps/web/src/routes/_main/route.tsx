@@ -3,4 +3,4 @@ import { MainLayout } from "../../layouts/MainLayout";
 
 export const Route = createFileRoute("/_main")({
   component: MainLayout,
-})
+});
