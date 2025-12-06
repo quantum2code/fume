@@ -1,4 +1,7 @@
+import { useEffect, useRef, useMemo } from "react";
+import { useNavigate } from "@tanstack/react-router";
 import { AppIcon, type AppIconProps } from "./AppIcon";
+import { useApp } from "../../context/useApp";
 
 const SystemAppRegistry: AppIconProps[] = [
   { name: "Dashboard", path: "/dashboard", appId: "dashboard" },
@@ -20,17 +23,75 @@ const UserAppRegistry: AppIconProps[] = [
   { name: "Stardew Valley", appId: "413150", path: "/apps/413150" },
 ];
 const AppRegistry = [...SystemAppRegistry, ...UserAppRegistry];
+
 export function AppBar() {
+  const navigate = useNavigate();
+  const { activeApp } = useApp();
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Derive current index from activeApp
+  const currentIndex = useMemo(() => {
+    const index = AppRegistry.findIndex((app) => app.appId === activeApp);
+    return index !== -1 ? index : 0;
+  }, [activeApp]);
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        const nextIndex =
+          currentIndex < AppRegistry.length - 1
+            ? currentIndex + 1
+            : currentIndex;
+        const nextApp = AppRegistry[nextIndex];
+        if (nextApp) {
+          navigate({ to: nextApp.path });
+        }
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        const prevIndex = currentIndex > 0 ? currentIndex - 1 : currentIndex;
+        const prevApp = AppRegistry[prevIndex];
+        if (prevApp) {
+          navigate({ to: prevApp.path });
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [currentIndex, navigate]);
+
+  // Scroll active item into view
+  useEffect(() => {
+    if (itemRefs.current[currentIndex]) {
+      itemRefs.current[currentIndex]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [currentIndex]);
+
   return (
-    <div className="flex flex-col gap-2 max-h-full overflow-y-scroll hide-scrollbar">
-      {AppRegistry.map((app) => {
+    <div
+      className="flex flex-col gap-2 py-8 max-h-full overflow-y-scroll hide-scrollbar"
+      tabIndex={0}
+    >
+      {AppRegistry.map((app, index) => {
         return (
-          <AppIcon
+          <div
             key={app.appId}
-            name={app.name}
-            path={app.path}
-            appId={app.appId}
-          />
+            ref={(el) => {
+              itemRefs.current[index] = el;
+            }}
+          >
+            <AppIcon
+              name={app.name}
+              path={app.path}
+              appId={app.appId}
+              focused={currentIndex === index}
+            />
+          </div>
         );
       })}
     </div>

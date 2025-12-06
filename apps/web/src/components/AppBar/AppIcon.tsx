@@ -6,23 +6,26 @@ export interface AppIconProps {
   name: string;
   path: string;
   appId?: string;
+  focused?: boolean;
 }
 
-export function AppIcon({ name, path, appId }: AppIconProps) {
+export function AppIcon({ name, path, appId, focused = false }: AppIconProps) {
   const { activeApp } = useApp();
   const isActive = activeApp === appId;
 
   return (
     <Link to={path}>
       <div
-        className={`icon will-change-transform ${isActive ? "scale-150 my-5" : ""}`}
+        className={`icon will-change-transform transition-all ${
+          isActive ? "scale-150 my-5" : focused ? "scale-110 my-2" : ""
+        }`}
       >
         <div className="relative p-[4px] size-20 ">
           <div
             className={`absolute w-full h-full inset-0 transition-[opacity_scale] noise-mask rounded-xl scale-100`}
           >
-            {isActive && (
-              <div className="absolute -inset-[2px] opacity-70">
+            {(isActive || focused) && (
+              <div className={`absolute -inset-[2px] ${isActive ? "opacity-70" : "opacity-40"}`}>
                 <NoiseBox />
               </div>
             )}
@@ -33,7 +36,7 @@ export function AppIcon({ name, path, appId }: AppIconProps) {
             )}
             <img
               src={`https://steamcdn-a.akamaihd.net/steam/apps/${appId}/header.jpg`}
-              alt={name}
+              alt=""
               className="size-full object-cover"
             />
           </div>
