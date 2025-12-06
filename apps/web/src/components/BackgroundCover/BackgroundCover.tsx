@@ -25,7 +25,7 @@ export function BackgroundCover({ backgroundImage }: BackgroundCoverProps) {
       }
     }, 200);
     return () => {
-      if (debounceTimerRef.current != null) {
+      if (debounceTimerRef.current !== null) {
         clearTimeout(debounceTimerRef.current);
         debounceTimerRef.current = null;
       }

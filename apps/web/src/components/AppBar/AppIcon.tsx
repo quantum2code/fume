@@ -9,7 +9,7 @@ export interface AppIconProps {
   focused?: boolean;
 }
 
-export function AppIcon({ name, path, appId, focused = false }: AppIconProps) {
+export function AppIcon({ path, appId, focused = false }: AppIconProps) {
   const { activeApp } = useApp();
   const isActive = activeApp === appId;
 
@@ -25,7 +25,9 @@ export function AppIcon({ name, path, appId, focused = false }: AppIconProps) {
             className={`absolute w-full h-full inset-0 transition-[opacity_scale] noise-mask rounded-xl scale-100`}
           >
             {(isActive || focused) && (
-              <div className={`absolute -inset-[2px] ${isActive ? "opacity-70" : "opacity-40"}`}>
+              <div
+                className={`absolute -inset-[2px] ${isActive ? "opacity-70" : "opacity-40"}`}
+              >
                 <NoiseBox />
               </div>
             )}

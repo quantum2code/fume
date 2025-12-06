@@ -17,7 +17,7 @@ export function MainLayout() {
       <div
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className={`fixed w-40 p-8 pr-0 h-full top-0 left-0 transition-transform duration-300 z-50 ${showBar ? "translate-x-0" : "-translate-x-full"}`}
+        className={`fixed w-40 pl-8 h-full top-0 left-0 transition-transform duration-300 z-50 ${showBar ? "translate-x-0" : "-translate-x-full"}`}
       >
         <AppBar />
       </div>

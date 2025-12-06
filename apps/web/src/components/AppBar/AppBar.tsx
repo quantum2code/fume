@@ -38,6 +38,15 @@ export function AppBar() {
   // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Ignore if focus is on an interactive element
+      const target = e.target as HTMLElement;
+      if (
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.isContentEditable
+      ) {
+        return;
+      }
       if (e.key === "ArrowDown") {
         e.preventDefault();
         const nextIndex =
@@ -73,10 +82,7 @@ export function AppBar() {
   }, [currentIndex]);
 
   return (
-    <div
-      className="flex flex-col gap-2 py-8 max-h-full overflow-y-scroll hide-scrollbar"
-      tabIndex={0}
-    >
+    <div className="flex flex-col gap-2 py-8 max-h-full overflow-y-scroll hide-scrollbar">
       {AppRegistry.map((app, index) => {
         return (
           <div
