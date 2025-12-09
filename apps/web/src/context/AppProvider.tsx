@@ -15,12 +15,12 @@ export function AppProvider({ children }: { children: ReactNode }) {
     if (path.includes("settings")) return "settings";
 
     const match = path.match(/^\/apps\/(\d+)/);
-    if (match) {
+    if (match && match[1]) {
       return match[1];
     }
 
     return "dashboard";
-  }, [location.pathname]);
+  }, [location.pathname]) as string;
 
   //background image logic
   const backgroundImage = useMemo(() => {
