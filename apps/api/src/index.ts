@@ -1,28 +1,15 @@
 import { serve } from "@hono/node-server";
 import { Hono } from "hono";
-import { db } from "./db/db.js";
+import { prettyJSON } from "hono/pretty-json";
+import { apiRouter } from "./routes/router.js";
 
-const app = new Hono();
+const app = new Hono({ strict: false });
 
 app.get("/", async (c) => {
-  const appRow = await db.query.app.findFirst({
-    with: {
-      companies: {
-        with: {
-          company: true,
-        },
-      },
-      images: true,
-      movies: true,
-      achievements: true,
-      requirements: true,
-      parents: true,
-      children: true,
-    },
-  });
-  if (!appRow) return c.json({ success: false });
-  return c.json(appRow);
+  return c.json({ status: "live" });
 });
+
+app.route("/api", apiRouter);
 
 serve(
   {
@@ -33,5 +20,3 @@ serve(
     console.log(`Server is running on http://localhost:${info.port}`);
   }
 );
-
-export { app };

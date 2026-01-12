@@ -25,7 +25,7 @@ export const app = pgTable("app", {
   legalNotice: text("legal_notice"),
   descriptionShort: varchar("description_short").notNull(),
   descriptionDetailed: text("description_detailed"),
-  languagesSupported: jsonb("languages_supported"),
+  languagesSupported: text("languages_supported"),
   metacriticData: jsonb("metacritic_data"),
   releaseDateInfo: jsonb("release_date_info").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -40,7 +40,7 @@ export const company = pgTable("company", {
 export const category = pgTable("category", {
   id: serial("id").primaryKey(),
   name: varchar("name").notNull(),
-  type: varchar("type").notNull(),
+  type: varchar("type"),
 });
 
 //Junction Tables

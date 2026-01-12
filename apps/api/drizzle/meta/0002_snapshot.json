@@ -1,0 +1,731 @@
+{
+  "id": "d2e66864-8bf4-4480-8bf9-efdb964b3115",
+  "prevId": "e3491191-b24c-452e-979c-ce02a3182ee2",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.app": {
+      "name": "app",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "steam_appid": {
+          "name": "steam_appid",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "required_age": {
+          "name": "required_age",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "hero_image": {
+          "name": "hero_image",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "website": {
+          "name": "website",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "controller_support": {
+          "name": "controller_support",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "legal_notice": {
+          "name": "legal_notice",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description_short": {
+          "name": "description_short",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description_detailed": {
+          "name": "description_detailed",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "languages_supported": {
+          "name": "languages_supported",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "metacritic_data": {
+          "name": "metacritic_data",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "release_date_info": {
+          "name": "release_date_info",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.app_achievement": {
+      "name": "app_achievement",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "app_id": {
+          "name": "app_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "icon_url": {
+          "name": "icon_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "global_percent": {
+          "name": "global_percent",
+          "type": "numeric",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_achievement_app_id_app_id_fk": {
+          "name": "app_achievement_app_id_app_id_fk",
+          "tableFrom": "app_achievement",
+          "tableTo": "app",
+          "columnsFrom": [
+            "app_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.app_category_link": {
+      "name": "app_category_link",
+      "schema": "",
+      "columns": {
+        "app_id": {
+          "name": "app_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "category_id": {
+          "name": "category_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_category_link_app_id_app_id_fk": {
+          "name": "app_category_link_app_id_app_id_fk",
+          "tableFrom": "app_category_link",
+          "tableTo": "app",
+          "columnsFrom": [
+            "app_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "app_category_link_category_id_category_id_fk": {
+          "name": "app_category_link_category_id_category_id_fk",
+          "tableFrom": "app_category_link",
+          "tableTo": "category",
+          "columnsFrom": [
+            "category_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "app_category_link_app_id_category_id_pk": {
+          "name": "app_category_link_app_id_category_id_pk",
+          "columns": [
+            "app_id",
+            "category_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.app_company_link": {
+      "name": "app_company_link",
+      "schema": "",
+      "columns": {
+        "app_id": {
+          "name": "app_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "company_id": {
+          "name": "company_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "role": {
+          "name": "role",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_company_link_app_id_app_id_fk": {
+          "name": "app_company_link_app_id_app_id_fk",
+          "tableFrom": "app_company_link",
+          "tableTo": "app",
+          "columnsFrom": [
+            "app_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "app_company_link_company_id_company_id_fk": {
+          "name": "app_company_link_company_id_company_id_fk",
+          "tableFrom": "app_company_link",
+          "tableTo": "company",
+          "columnsFrom": [
+            "company_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "app_company_link_app_id_company_id_role_pk": {
+          "name": "app_company_link_app_id_company_id_role_pk",
+          "columns": [
+            "app_id",
+            "company_id",
+            "role"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.app_content_link": {
+      "name": "app_content_link",
+      "schema": "",
+      "columns": {
+        "parent_app_id": {
+          "name": "parent_app_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "child_app_id": {
+          "name": "child_app_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_content_link_parent_app_id_app_id_fk": {
+          "name": "app_content_link_parent_app_id_app_id_fk",
+          "tableFrom": "app_content_link",
+          "tableTo": "app",
+          "columnsFrom": [
+            "parent_app_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "app_content_link_child_app_id_app_id_fk": {
+          "name": "app_content_link_child_app_id_app_id_fk",
+          "tableFrom": "app_content_link",
+          "tableTo": "app",
+          "columnsFrom": [
+            "child_app_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "app_content_link_parent_app_id_child_app_id_type_pk": {
+          "name": "app_content_link_parent_app_id_child_app_id_type_pk",
+          "columns": [
+            "parent_app_id",
+            "child_app_id",
+            "type"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.app_images": {
+      "name": "app_images",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "app_id": {
+          "name": "app_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path_thumbnail": {
+          "name": "path_thumbnail",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "path_full": {
+          "name": "path_full",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_images_app_id_app_id_fk": {
+          "name": "app_images_app_id_app_id_fk",
+          "tableFrom": "app_images",
+          "tableTo": "app",
+          "columnsFrom": [
+            "app_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.app_movies": {
+      "name": "app_movies",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "app_id": {
+          "name": "app_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "thumbnail": {
+          "name": "thumbnail",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "url_480p": {
+          "name": "url_480p",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "url_max": {
+          "name": "url_max",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_movies_app_id_app_id_fk": {
+          "name": "app_movies_app_id_app_id_fk",
+          "tableFrom": "app_movies",
+          "tableTo": "app",
+          "columnsFrom": [
+            "app_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.app_price": {
+      "name": "app_price",
+      "schema": "",
+      "columns": {
+        "app_id": {
+          "name": "app_id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "currency_code": {
+          "name": "currency_code",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price_initial": {
+          "name": "price_initial",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "price_final": {
+          "name": "price_final",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discount_percent": {
+          "name": "discount_percent",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_price_app_id_app_id_fk": {
+          "name": "app_price_app_id_app_id_fk",
+          "tableFrom": "app_price",
+          "tableTo": "app",
+          "columnsFrom": [
+            "app_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.app_requirement": {
+      "name": "app_requirement",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "app_id": {
+          "name": "app_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "platform": {
+          "name": "platform",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "spec_type": {
+          "name": "spec_type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "app_requirement_app_id_app_id_fk": {
+          "name": "app_requirement_app_id_app_id_fk",
+          "tableFrom": "app_requirement",
+          "tableTo": "app",
+          "columnsFrom": [
+            "app_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.category": {
+      "name": "category",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.company": {
+      "name": "company",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.user_achievement_status": {
+      "name": "user_achievement_status",
+      "schema": "",
+      "columns": {
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "achievement_id": {
+          "name": "achievement_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_unlocked": {
+          "name": "is_unlocked",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "unlocked_at": {
+          "name": "unlocked_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "user_achievement_status_achievement_id_app_achievement_id_fk": {
+          "name": "user_achievement_status_achievement_id_app_achievement_id_fk",
+          "tableFrom": "user_achievement_status",
+          "tableTo": "app_achievement",
+          "columnsFrom": [
+            "achievement_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {
+        "user_achievement_status_user_id_achievement_id_pk": {
+          "name": "user_achievement_status_user_id_achievement_id_pk",
+          "columns": [
+            "user_id",
+            "achievement_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

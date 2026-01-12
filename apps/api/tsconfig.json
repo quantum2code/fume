@@ -4,9 +4,9 @@
     "module": "NodeNext",
     "moduleResolution": "nodenext",
     "sourceMap": true,
-    // "types": [
-    //   "node"
-    // ],
+    "types": [
+      "node"
+    ],
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "outDir": "./dist"

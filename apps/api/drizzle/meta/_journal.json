@@ -15,6 +15,13 @@
       "when": 1765354505009,
       "tag": "0001_same_stone_men",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1765629455997,
+      "tag": "0002_shallow_gladiator",
+      "breakpoints": true
     }
   ]
 }
